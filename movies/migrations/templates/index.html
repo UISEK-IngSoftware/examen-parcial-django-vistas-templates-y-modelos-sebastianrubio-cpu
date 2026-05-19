@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Películas</title>
+    <style>
+        body { background-color: #1a1a1a; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        .header { background-color: #5b636a; padding: 40px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
+        h1 { margin: 0; font-size: 32px; color: #333333; }
+        .movie-list { list-style-type: none; padding: 0; max-width: 800px; margin: 0 auto; }
+        .movie-item { border: 1px solid #333; padding: 15px; margin-bottom: 1px; background-color: #111; }
+        .movie-item a { color: #ffffff; text-decoration: none; font-size: 18px; display: block; }
+        .movie-item a:hover { color: #5b636a; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Encabezado de la Aplicación</h1>
+    </div>
+
+    <ul class="movie-list">
+        {% for movie in movies %}
+            <li class="movie-item">
+                <a href="/movie/{{ movie.id }}">
+                    {{ movie.name }} - {{ movie.publication_date.year }}
+                </a>
+            </li>
+        {% empty %}
+            <li class="movie-item">No hay películas registradas en la base de datos.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

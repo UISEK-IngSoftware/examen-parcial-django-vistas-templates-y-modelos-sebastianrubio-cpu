@@ -1,21 +1,18 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render, get_object_or_404
 from .models import Movie
 
-
 def index(request):
-    Movies = Movie.objects.all()
-    template = loader.get_template('index.html')
-    
+    # Obtiene todas las películas
+    movies = Movie.objects.all()
     context = {
-        'Movies' : Movie
+        'movies': movies
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'index.html', context)
     
-def movie(request, id: int):
-    movie = Movie.objects.all(id=id)
-    template = loader.get_template('display_movie.html')
+def movie(request, id):
+    # Error 404 me lo dio el visual 
+    movie_obj = get_object_or_404(Movie, id=id)
     context = {
-        'movie' : Movie
+        'movie': movie_obj
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'display_movie.html', context)
