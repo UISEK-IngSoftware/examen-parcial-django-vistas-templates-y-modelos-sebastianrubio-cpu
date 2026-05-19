@@ -2,32 +2,64 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Películas</title>
-    <! Use una base que saque de bootstrap en web para STYLE y la logica la saque de los otros laboratorios>
+    <title>Cartelera de Películas</title>
     <style>
-        body { background-color: #1a1a1a; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { margin: 0; font-size: 32px; color: #ffffff; }
-        .movie-list { list-style-type: none; padding: 0; max-width: 800px; margin: 0 auto; }
-        .movie-item { border: 1px solid #ffffff; padding: 15px; margin-bottom: 1px; background-color: #111; }
-        .movie-item a { color: #ffffff; text-decoration: none; font-size: 18px; display: block; }
-        .centrar-texto {text-align: center;}
+        body { background-color: #0d0d0c; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        .navbar { background-color: #1a1a1a; padding: 20px 40px; border-bottom: 2px solid #e5b300; display: flex; justify-content: center; }
+        h1 { margin: 0; font-size: 28px; color: #e5b300; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .grid-cartelera { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 30px; 
+            padding: 40px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .movie-card { 
+            background-color: #1a1a1a; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            text-align: center;
+        }
+        .movie-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(229, 179, 0, 0.2); 
+        }
+        .poster-container { width: 100%; height: 330px; background-color: #2a2a2a; }
+        .poster-img { width: 100%; height: 100%; object-fit: cover; }
+        .movie-info { padding: 15px; }
+        .movie-title { font-size: 18px; font-weight: bold; margin: 0 0 5px 0; color: #ffffff; text-decoration: none; display: block; }
+        .movie-title:hover { color: #e5b300; }
+        .movie-year { font-size: 14px; color: #888888; margin: 0; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="centrar-texto">Encabezado de la Aplicación</h1>
+    <div class="navbar">
+        <h1>Cartelera</h1>
     </div>
 
-    <ul class="movie-list">
+    <div class="grid-cartelera">
         {% for movie in movies %}
-            <li class="movie-item">
+            <div class="movie-card">
                 <a href="/movie/{{ movie.id }}">
-                    {{ movie.name }} - {{ movie.publication_date.year }}
+                    <div class="poster-container">
+                        {% if movie.poster_url %}
+                            <img src="{{ movie.poster_url }}" alt="Póster de {{ movie.name }}" class="poster-img">
+                        {% else %}
+                            <img src="https://via.placeholder.com/220x330/2a2a2a/888888?text=Sin+Poster" alt="Sin imagen" class="poster-img">
+                        {% endif %}
+                    </div>
                 </a>
-            </li>
+                <div class="movie-info">
+                    <a href="/movie/{{ movie.id }}" class="movie-title">{{ movie.name }}</a>
+                    <p class="movie-year">{{ movie.publication_date.year }}</p>
+                </div>
+            </div>
         {% empty %}
-            <li class="movie-item">No hay películas registradas en la base de datos.</li>
+            <p style="text-align: center; width: 100%; grid-column: 1 / -1;">No hay películas en cartelera.</p>
         {% endfor %}
-    </ul>
+    </div>
 </body>
 </html>

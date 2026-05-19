@@ -19,6 +19,7 @@ class Movie(models.Model):
     director = models.CharField(max_length=50, null=False)
     publication_date = models.DateField(null=False)
     synopsis = models.TextField(null=True)
+    poster_url = models.URLField(max_length=500, null=True, blank=True)
     
     def __str__(self):
         return f"{self.name} - {self.director}"

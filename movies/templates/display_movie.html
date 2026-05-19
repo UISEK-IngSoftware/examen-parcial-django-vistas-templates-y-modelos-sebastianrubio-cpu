@@ -2,36 +2,179 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ movie.name }}</title>
-    <! Use una base que saque de bootstrap en web para STYLE y la logica la saque de los otros laboratorios>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.name }} - Detalles</title>
     <style>
-        body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-        h1 { margin: 0; font-size: 32px; color: #333333; }
-        .content { max-width: 800px; margin: 0 auto; }
-        .content h2 { font-size: 36px; margin-bottom: 20px; }
-        .content p { font-size: 18px; margin: 10px 0; line-height: 1.6; }
-        .centrar-texto {text-align: center;}
+        /* Paleta Oficial Multicines: Gris Humo (#16181E) y Turquesa Brillante (#14D7CE) */
+        body {
+            background-color: #16181E;
+            color: #d1d5db;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Barra de Navegación */
+        .navbar {
+            background-color: #0d0e12;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid #e5b300; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .back-button {
+            color: #e5b300;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #ffffff;
+        }
+
+        /* Contenedor Principal (Encapsulado) */
+        .main-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 35px;
+            background-color: #1c1e26;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Título de la Película */
+        .movie-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            border-bottom: 2px solid #2a2d39;
+            padding-bottom: 15px;
+        }
+
+        /* Cuadrícula de Especificaciones (Ficha Técnica) */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+            background-color: #13141a;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #2a2d39;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #e5b300;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .spec-value {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* Bloque de Sinopsis */
+        .synopsis-section {
+            background-color: #13141a;
+            padding: 25px 30px;
+            border-left: 4px solid #e5b300;
+            border-radius: 0 8px 8px 0;
+            border-top: 1px solid #2a2d39;
+            border-right: 1px solid #2a2d39;
+            border-bottom: 1px solid #2a2d39;
+        }
+
+        .synopsis-title {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .synopsis-text {
+            font-size: 16px;
+            color: #b3b9c1;
+            text-align: justify;
+            margin: 0;
+        }
+
+        /* Pie de página */
+        .footer-branding {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #586071;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <a href="/" class="back-link"> Volver al catálogo</a>
-    
-    <div class="header">
-        
-        
-        <h1 class="centrar-texto">Encabezado de la Aplicación</h1>
 
-       
-        
+    <div class="navbar">
+        <a href="/" class="back-button">← Volver a la Cartelera</a>
     </div>
 
-    <div class="content">
-        <h2>{{ movie.name }}</h2>
-        <p><strong>Año de publicación:</strong> {{ movie.publication_date.year }}</p>
-        <p><strong>Director:</strong> {{ movie.director }}</p>
-        <p><strong>Género:</strong> {{ movie.get_genre_display }}</p>
-        <p><strong>Sinopsis:</strong> {{ movie.synopsis }}</p>
+    <div class="main-container">
+        
+        <h1 class="movie-title">{{ movie.name }}</h1>
+
+        <div class="specs-grid">
+            <div class="spec-item">
+                <span class="spec-label">Año de Estreno</span>
+                <span class="spec-value">{{ movie.publication_date.year }}</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Director</span>
+                <span class="spec-value">{{ movie.director }}</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Género</span>
+                <span class="spec-value">{{ movie.get_genre_display }}</span>
+            </div>
+        </div>
+
+        <div class="synopsis-section">
+            <h3 class="synopsis-title">Sinopsis</h3>
+            <p class="synopsis-text">
+                {% if movie.synopsis %}
+                    {{ movie.synopsis }}
+                {% else %}
+                    No se dispone de un argumento o descripción detallada para esta obra cinematográfica en la base de datos actual.
+                {% endif %}
+            </p>
+        </div>
+
     </div>
+
+    <div class="footer-branding">
+        Sistema de Gestión de Cartelera
+    </div>
+
 </body>
 </html>
