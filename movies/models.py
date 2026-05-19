@@ -2,9 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class movies (models.Model):
-    Name = models.CharField(max_length=50, null= False)
-    
+class Movie(models.Model):
+    name = models.CharField(max_length=50, null=False)
     
     GENRE_CHOICES = [
         ('M', 'Miedo'),
@@ -16,10 +15,10 @@ class movies (models.Model):
         ('F', 'Filosofico'),
         ('NA', 'No Definida')    
     ]
-    Genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='NA')
-    Director = models,models.CharField(max_length=50, null=False)
-    Publication_Date = models.DateField(null=False)
-    Sinopsis = models.TextField(null=True)
+    genre = models.CharField(max_length=2, choices=GENRE_CHOICES, default='NA')
+    director = models.CharField(max_length=50, null=False)
+    publication_date = models.DateField(null=False)
+    synopsis = models.TextField(null=True)
     
     def __str__(self):
-        return F"{self.Name}{self.Genre}{self.Director}"
+        return f"{self.name} - {self.director}"
